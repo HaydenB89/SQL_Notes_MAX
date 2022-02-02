@@ -1,0 +1,13 @@
+CREATE OR ALTER Procedure DisplayVendorsByAcountNos
+	@LowAccountNo int = 0,
+	@HighAccountNo int = 1000
+AS
+
+SELECT VendorName, DefaultAccountNo, AccountDescription
+FROM Vendors as v
+	Join GLAccounts as g
+		ON v.DefaultAccountNo = g.AccountNo
+WHERE DefaultAccountNo between @LowAccountNo and @HighAccountNo 
+ORDER BY VendorName;
+
+--refer to execute_peramerterExample1
