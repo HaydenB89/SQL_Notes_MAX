@@ -1,0 +1,23 @@
+--USE Sales (but dont uncomment this CREATE does not like it)
+CREATE OR ALTER PROCEDURE AddOrderLine
+	@Product varchar(30) = NULL,
+	@Qty int = 1,
+	@Price DECIMAL(7,2) = 10,
+	@OrderID int = NULL
+AS
+
+IF @Product IS NULL
+BEGIN 
+	PRINT 'Product Selection Is Required';
+	RETURN -1;
+END
+IF @OrderID IS NULL
+BEGIN 
+	PRINT 'OrderID Is Required';
+	RETURN -2;
+END
+
+
+INSERT INTO OrderLines
+	(Product, Qty, Price, OrderID) VALUES
+	(@Product, @Qty, @Price, @OrderID);
