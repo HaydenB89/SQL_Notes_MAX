@@ -1,0 +1,108 @@
+--USE AP
+
+--Chapter 12
+  --p.375
+  --Creating Database using Management Studio
+
+
+-- Example Query from created SALES DB
+USE Sales
+SELECT * FROM Customers;
+SELECT * FROM Orders;
+SELECT * FROM OrderLines;
+
+/*
+INSERT INTO ORDERLINES
+	(Product, Qty, Price, OrderID) VALUES
+	('Echo', 12, 100, 1),
+	('Dot', 7, 30, 1),
+	('Show', 3, 140, 1);
+*/
+
+SELECT o.Id, o.OrderDiscription, o.OrderTotal, c.Name,
+	ol.Product, ol.Qty, ol.Price, (ol.Qty * ol.Price) AS 'LineTotal'
+FROM Orders AS o 
+	JOIN Customers AS c
+		ON o.CustomerID = c.ID
+	JOIN OrderLines AS ol 
+		ON ol.OrderID = o.ID
+
+
+
+
+--Chapter 15
+	-- Procedured
+	--p457
+USE AP
+
+SELECT * 
+FROM Vendors
+ORDER BY DefaultAccountNo
+-- select only acctno. is 540
+SELECT * 
+FROM Vendors
+WHERE DefaultAccountNo = 540;
+-- only want name and acctno.
+SELECT VendorName, DefaultAccountNo
+FROM Vendors
+WHERE DefaultAccountNo = 540
+ORDER BY VendorName
+--user wants different accountno.
+SELECT VendorName, DefaultAccountNo
+FROM Vendors
+WHERE DefaultAccountNo = 572
+ORDER BY VendorName
+
+--let the user pick their own perameter w/o access to query
+ -- use DECLARE and put data in using SET
+ /*
+DECLARE @AccountNo int;
+SET @AccountNo = 572;
+
+SELECT VendorName, DefaultAccountNo
+FROM Vendors
+WHERE DefaultAccountNo = @AccountNo
+ORDER BY VendorName
+*/
+-- DECLARE multiple selections
+		--make sure you highlight the entire command before you execute and be in AP
+/*
+DECLARE @LowAccountNo int;
+DECLARE @HighAccountNo int
+
+SET @LowAccountNo = 200;
+SET @HighAccountNo = 450;
+*/
+/*
+SELECT VendorName, DefaultAccountNo
+FROM Vendors
+WHERE DefaultAccountNo between @LowAccountNo and @HighAccountNo 
+ORDER BY VendorName;
+*/
+/*
+--if the vendor wans multiple columns of info
+SELECT VendorName, DefaultAccountNo, AccountDescription
+FROM Vendors as v
+	Join GLAccounts as g
+		ON v.DefaultAccountNo = g.AccountNo
+WHERE DefaultAccountNo between @LowAccountNo and @HighAccountNo 
+ORDER BY VendorName;
+*/
+
+--now change all this previous sript into a PROCEDURE so the user cant change the code
+	--copied this to CREATE_ALTERexample1HB
+CREATE OR ALTER Procedure DisplayVendorsByAcountNos
+AS
+
+DECLARE @LowAccountNo int;
+DECLARE @HighAccountNo int
+
+SET @LowAccountNo = 200;
+SET @HighAccountNo = 450;
+
+SELECT VendorName, DefaultAccountNo, AccountDescription
+FROM Vendors as v
+	Join GLAccounts as g
+		ON v.DefaultAccountNo = g.AccountNo
+WHERE DefaultAccountNo between @LowAccountNo and @HighAccountNo 
+ORDER BY VendorName;
