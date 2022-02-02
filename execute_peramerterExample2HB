@@ -1,0 +1,6 @@
+--references CREATE_ALTERexample2HB
+
+exec AddOrderLine @Product = 'Fire TV', @Price = 120, @OrderID = 1;
+
+SELECT *
+FROM OrderLines
