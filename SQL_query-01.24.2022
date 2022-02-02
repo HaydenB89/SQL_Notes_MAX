@@ -1,0 +1,28 @@
+--Chapter 6 Was lost in a crash grrrr
+
+
+--CHAPTER 7 
+	--Modifying and Creating Tables
+--p.215
+
+INSERT INTO Table_1 (CustomerName) Values ('45678945');
+
+SELECT * FROM Table_1 
+
+CREATE TABLE temp_Class_1 ([id] [int] IDENTITY(1,1) NOT NULL, CustomerName varchar(50))
+
+INSERT INTO temp_Class_1 (CustomerName) VALUES ('45678945'), ('abc1234');
+
+SELECT * FROM Table_1
+
+UPDATE Table_1
+SET CustomerName = '45678945',
+	[Date] = GETDATE()
+WHERE id = 4;
+
+UPDATE Table_1
+SET CustomerName = 'abc1234',
+	[Date] = GETDATE()
+WHERE id = 4;
+
+--^^^ Table_1 is not working correctly 
