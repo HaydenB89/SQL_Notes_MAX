@@ -1,0 +1,5 @@
+--this is refering to CREATE_ALTERexmple1
+
+--perameters for users to view specific account perameters
+
+exec DisplayVendorsByAcountNos @LowAccountNo = 200, @HighAccountNo = 400;
